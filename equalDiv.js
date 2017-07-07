@@ -23,10 +23,10 @@
                 if(lastKnownWidth > currentEqualizer.equalizeOn) {
 
                     currentEqualizer.heightArray = [];
+                    currentEqualizer.el.classList.add('resetEqualizer');
 
                     // recalculate layout
                     for (j=0; j < currentEqualizer.items.length; j++) {
-                        currentEqualizer.items[j].style.height = '';
                         matchedElemHeight = currentEqualizer.items[j].offsetHeight;
                         currentEqualizer.heightArray.push( matchedElemHeight > currentEqualizer.minHeight ? matchedElemHeight : currentEqualizer.minHeight );
                     }
@@ -44,12 +44,13 @@
 
                 }
 
-                // reflow
+            
                 if (currentEqualizer.hasBeenModified) {
-                    currentEqualizer.hasBeenModified = false; // reset property
                     for (j=0; j < currentEqualizer.items.length; j++) {
                         currentEqualizer.items[j].style.height = currentEqualizer.lastKnownHeight; // set new height to shadow elements
-                    }     
+                    }
+                    currentEqualizer.hasBeenModified = false; // reset property
+                    currentEqualizer.el.classList.remove('resetEqualizer');   
                 } 
 
             }
@@ -92,6 +93,7 @@
                 elementsObjArray = [];
 
             function _equalizer( equalizerContainer ) {
+                this.el = equalizerContainer;
                 this.items = equalizerContainer.getElementsByClassName(watchClass + '-watch'); // live elements
                 this.equalizeOn = getBreakpointWidth(equalizerContainer.getAttribute("data-equalize-on")) || getBreakpointWidth(data.equalizeOn || 'medium');
                 this.heightArray = [];
