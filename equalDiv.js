@@ -43,7 +43,7 @@
 
             currentEqualizer = equalizers[i];
             
-            if( currentWidth > equalizeOn && currentWidth > currentEqualizer.equalizeOn ) {
+            if( currentWidth > currentEqualizer.equalizeOn ) {
                 
                 currentEqualizer.heightArray = [];
 
