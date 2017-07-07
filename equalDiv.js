@@ -5,48 +5,55 @@
     var
         i = 0,
         j = 0,
+        lastKnownWidth = 0,
         matchedElemHeight = 0,
         currentEqualizer,
         equalizers;
 
     function equalize(currentWidth) {
 
-        for (i=0; i < equalizers.length; i++) {
+        if (currentWidth !== lastKnownWidth) {
 
-            currentEqualizer = equalizers[i];
+            lastKnownWidth = currentWidth;
 
-            if(currentWidth > currentEqualizer.equalizeOn) {
+            for (i=0; i < equalizers.length; i++) {
 
-                currentEqualizer.heightArray = [];
+                currentEqualizer = equalizers[i];
 
-                // recalculate layout
-                for (j=0; j < currentEqualizer.items.length; j++) {
-                    currentEqualizer.items[j].style.height = '';
-                    matchedElemHeight = currentEqualizer.items[j].offsetHeight;
-                    currentEqualizer.heightArray.push( matchedElemHeight > currentEqualizer.minHeight ? matchedElemHeight : currentEqualizer.minHeight );
-                }
+                if(lastKnownWidth > currentEqualizer.equalizeOn) {
 
-                currentEqualizer.lastKnownHeight = Math.max.apply(null, currentEqualizer.heightArray);
-                currentEqualizer.hasBeenModified = true;
+                    currentEqualizer.heightArray = [];
 
-            } else {
+                    // recalculate layout
+                    for (j=0; j < currentEqualizer.items.length; j++) {
+                        currentEqualizer.items[j].style.height = '';
+                        matchedElemHeight = currentEqualizer.items[j].offsetHeight;
+                        currentEqualizer.heightArray.push( matchedElemHeight > currentEqualizer.minHeight ? matchedElemHeight : currentEqualizer.minHeight );
+                    }
 
-                if (currentEqualizer.lastKnownHeight>0) {
+                    currentEqualizer.lastKnownHeight = Math.max.apply(null, currentEqualizer.heightArray);
                     currentEqualizer.hasBeenModified = true;
+
+                } else {
+
+                    if (currentEqualizer.lastKnownHeight>0) {
+                        currentEqualizer.hasBeenModified = true;
+                    }
+
+                    currentEqualizer.lastKnownHeight = '';
+
                 }
 
-                currentEqualizer.lastKnownHeight = '';
+                // reflow
+                if (currentEqualizer.hasBeenModified) {
+                    currentEqualizer.hasBeenModified = false; // reset property
+                    for (j=0; j < currentEqualizer.items.length; j++) {
+                        currentEqualizer.items[j].style.height = currentEqualizer.lastKnownHeight; // set new height to shadow elements
+                    }     
+                } 
 
             }
-
-            // reflow
-            if (currentEqualizer.hasBeenModified) {
-                currentEqualizer.hasBeenModified = false; // reset property
-                for (j=0; j < currentEqualizer.items.length; j++) {
-                    currentEqualizer.items[j].style.height = currentEqualizer.lastKnownHeight; // set new height to shadow elements
-                }     
-            } 
-
+        
         }
 
     }
