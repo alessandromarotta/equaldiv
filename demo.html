@@ -5,9 +5,13 @@
         <style>
             * {box-sizing:border-box;}
             body {color: #ddd;}
-            .equalized-watch {display: block;}
-            .resetEqualizer .equalized-watch {height: initial !important;}
-            .content-wrap div{width: 20%;background: #444;display: block;float: left;font-size: 8px;margin: 0 10px 10px 0;padding: 20px;}
+            img {max-width: 100%;margin: 0 auto;display: block;padding: 5px;}
+
+            .equalizer-watch {display: block;}
+
+            .content-wrap {display: inline-block;}
+            .content-wrap div{width: 20%;background: #444;display: block;float: left;font-size: 8px;margin: 0 10px 10px 0;padding: 15px;}
+
         </style>
 
     </head>
@@ -15,33 +19,71 @@
     <body>
         <div id="content">
 
-            <div class="content-wrap equalized">
-                
-                <div>
-                    <span class="equalized-watch"><h1>Header</h1>1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nunc est, facilisis in blandit sit amet, rhoncus vel lectus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.</span>
+            <div>
+
+                <div class="content-wrap equalizer">
+                    
+                    <div>
+                        <span class="equalizer-watch"><h1>Header</h1>1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nunc est, facilisis in blandit sit amet, rhoncus vel lectus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.</span>
+                    </div>
+                    <div>
+                        <span class="equalizer-watch"><h1>Header</h1>2. Vivamus eu lorem mauris. Curabitur elementum felis nec libero malesuada in varius neque ultrices. Nunc sollicitudin nunc non risus mattis at varius lorem sagittis. Ut erat quam, molestie a viverra ac, porttitor a massa. Mauris eget mollis massa. Suspendisse et erat sem. Vestibulum eleifend vulputate elit at adipiscing. Suspendisse ac lectus massa.</span>
+                    </div>
+                    <div>
+                        <span class="equalizer-watch"><h1>Header</h1>3. Nulla gravida neque nec metus tempus pulvinar. Nulla tincidunt lacinia ultricies. Curabitur tristique malesuada bibendum. Phasellus congue magna sem. Morbi tristique dui non sem ullamcorper fringilla. Nullam nec feugiat nibh. Duis sodales rutrum tortor sit amet volutpat.</span>
+                    </div>
+                    <div>
+                        <span class="equalizer-watch"><h1>Header</h1>4. Nunc diam mi, dignissim eu fermentum at, egestas id ligula.</span>
+                    </div>
+                    <div>
+                        <span class="equalizer-watch"><h1>Header</h1>Fusce lacus metus, vehicula nec congue id, adipiscing ac erat. Nunc justo neque, pharetra quis interdum vel, porta eget odio. Nunc lacinia posuere dui.</span>
+                    </div>
+                    <div>
+                        <span class="equalizer-watch"><h1>Header</h1>6. Quisque nec ante mi, ac tempus turpis.</span>
+                    </div>
+                    <div>
+                        <span class="equalizer-watch"><h1>Header</h1>7. Quisque vel erat turpis. Fusce accumsan venenatis dapibus. Mauris viverra, felis non laoreet vestibulum, leo nibh vulputate justo, in accumsan libero magna nec metus. Ut condimentum mauris nisl. Vivamus in nunc nisl. Proin commodo, mauris a placerat pellentesque, justo nisi euismod lacus, ut porttitor dui erat sit amet mi.</span>
+                    </div>
+                    <div>
+                        <span class="equalizer-watch"><h1>Header</h1>8. Nam gravida neque eget diam venenatis semper. Phasellus ultricies porttitor nisl. Nam adipiscing mollis magna et dictum. Praesent ornare tempor augue, sit amet lobortis risus dictum at. Donec ligula felis, hendrerit vel laoreet quis, ornare auctor enim.</span>
+                    </div>
+                    
                 </div>
+
                 <div>
-                    <span class="equalized-watch"><h1>Header</h1>2. Vivamus eu lorem mauris. Curabitur elementum felis nec libero malesuada in varius neque ultrices. Nunc sollicitudin nunc non risus mattis at varius lorem sagittis. Ut erat quam, molestie a viverra ac, porttitor a massa. Mauris eget mollis massa. Suspendisse et erat sem. Vestibulum eleifend vulputate elit at adipiscing. Suspendisse ac lectus massa.</span>
+
+                    <div class="content-wrap equalizer" data-equalize-on="xlarge" data-equalizer-minheight="250">
+                        
+                        <div>
+                            <span class="equalizer-watch"><h1>Header</h1>1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nunc est, facilisis in blandit sit amet, rhoncus vel lectus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.</span>
+                        </div>
+                        <div>
+                            <span class="equalizer-watch"><h1>Header</h1>2. Vivamus eu lorem mauris. Curabitur elementum felis nec libero malesuada in varius neque ultrices. Nunc sollicitudin nunc non risus mattis at varius lorem sagittis. Ut erat quam, molestie a viverra ac, porttitor a massa. Mauris eget mollis massa. Suspendisse et erat sem. Vestibulum eleifend vulputate elit at adipiscing. Suspendisse ac lectus massa.
+                            Nulla gravida neque nec metus tempus pulvinar. Nulla tincidunt lacinia ultricies. Curabitur tristique malesuada bibendum. Phasellus congue magna sem. Morbi tristique dui non sem ullamcorper fringilla. Nullam nec feugiat nibh. Duis sodales rutrum tortor sit amet volutpat.</span>
+                        </div>
+                        <div>
+                            <span class="equalizer-watch"><h1>Header</h1>3. Nulla gravida neque nec metus tempus pulvinar. Nulla tincidunt lacinia ultricies. Curabitur tristique malesuada bibendum. Phasellus congue magna sem. Morbi tristique dui non sem ullamcorper fringilla. Nullam nec feugiat nibh. Duis sodales rutrum tortor sit amet volutpat.</span>
+                        </div>
+                        <div>
+                            <span class="equalizer-watch"><h1>Header</h1>4. Nunc diam mi, dignissim eu fermentum at, egestas id ligula.</span>
+                        </div>
+                        <div>
+                            <span class="equalizer-watch"><h1>Header</h1>5. Fusce lacus metus, vehicula nec congue id, adipiscing ac erat. Nunc justo neque, pharetra quis interdum vel, porta eget odio. Nunc lacinia posuere dui.</span>
+                        </div>
+                        <div>
+                            <span class="equalizer-watch"><h1>Header</h1>6. Quisque nec ante mi, ac tempus turpis. Quisque vel erat turpis. Fusce accumsan venenatis dapibus. Mauris viverra, felis non laoreet vestibulum, leo nibh vulputate justo, in accumsan libero magna nec metus. Ut condimentum mauris nisl. Vivamus in nunc nisl. Proin commodo, mauris a placerat pellentesque, justo nisi euismod lacus, ut porttitor dui erat sit amet mi.Quisque vel erat turpis. Fusce accumsan venenatis dapibus. Mauris viverra, felis non laoreet vestibulum, leo nibh vulputate justo, in accumsan libero magna nec metus. Ut condimentum mauris nisl. Vivamus in nunc nisl. Proin commodo, mauris a placerat pellentesque, justo nisi euismod lacus, ut porttitor dui erat sit amet mi.Quisque vel erat turpis. Fusce accumsan venenatis dapibus. Mauris viverra, felis non laoreet vestibulum, leo nibh vulputate justo, in accumsan libero magna nec metus. Ut condimentum mauris nisl. Vivamus in nunc nisl. Proin commodo, mauris a placerat pellentesque, justo nisi euismod lacus, ut porttitor dui erat sit amet mi.</span>
+                        </div>
+                        <div>
+                            <span class="equalizer-watch"><h1>Header</h1>7. Quisque vel erat turpis. Fusce accumsan venenatis dapibus. Mauris viverra, felis non laoreet vestibulum, leo nibh vulputate justo, in accumsan libero magna nec metus. Ut condimentum mauris nisl. Vivamus in nunc nisl. Proin commodo, mauris a placerat pellentesque, justo nisi euismod lacus, ut porttitor dui erat sit amet mi.</span>
+                        </div>
+                        <div>
+                            <span class="equalizer-watch"><h1>Header</h1>8. Nam gravida neque eget diam venenatis semper. Phasellus ultricies porttitor nisl. Nam adipiscing mollis magna et dictum. Praesent ornare tempor augue, sit amet lobortis risus dictum at. Donec ligula felis, hendrerit vel laoreet quis, ornare auctor enim.</span>
+                        </div>
+                        
+                    </div>
+
                 </div>
-                <div>
-                    <span class="equalized-watch"><h1>Header</h1>3. Nulla gravida neque nec metus tempus pulvinar. Nulla tincidunt lacinia ultricies. Curabitur tristique malesuada bibendum. Phasellus congue magna sem. Morbi tristique dui non sem ullamcorper fringilla. Nullam nec feugiat nibh. Duis sodales rutrum tortor sit amet volutpat.</span>
-                </div>
-                <div>
-                    <span class="equalized-watch"><h1>Header</h1>4. Nunc diam mi, dignissim eu fermentum at, egestas id ligula.</span>
-                </div>
-                <div>
-                    <span class="equalized-watch"><h1>Header</h1>5. Fusce lacus metus, vehicula nec congue id, adipiscing ac erat. Nunc justo neque, pharetra quis interdum vel, porta eget odio. Nunc lacinia posuere dui.</span>
-                </div>
-                <div>
-                    <span class="equalized-watch"><h1>Header</h1>6. Quisque nec ante mi, ac tempus turpis.</span>
-                </div>
-                <div>
-                    <span class="equalized-watch"><h1>Header</h1>7. Quisque vel erat turpis. Fusce accumsan venenatis dapibus. Mauris viverra, felis non laoreet vestibulum, leo nibh vulputate justo, in accumsan libero magna nec metus. Ut condimentum mauris nisl. Vivamus in nunc nisl. Proin commodo, mauris a placerat pellentesque, justo nisi euismod lacus, ut porttitor dui erat sit amet mi.</span>
-                </div>
-                <div>
-                    <span class="equalized-watch"><h1>Header</h1>8. Nam gravida neque eget diam venenatis semper. Phasellus ultricies porttitor nisl. Nam adipiscing mollis magna et dictum. Praesent ornare tempor augue, sit amet lobortis risus dictum at. Donec ligula felis, hendrerit vel laoreet quis, ornare auctor enim.</span>
-                </div>
-                
+
             </div>
 
         </div>
@@ -50,9 +92,10 @@
     <script src="equalDiv.js"></script>
 
     <script async>
-        equalDiv({
-            containerID: 'content'
-        });
+            
+        equalDiv.init();
+        window.addEventListener('resize', equalDiv.resize, false );
+        
     </script>
 
 </html>
