@@ -5,57 +5,57 @@
     var
         i = 0,
         j = 0,
-        lastKnownWidth = 0,
+        equalizerStyleEl,
+        equalizerCSSRules = '',
         matchedElemHeight = 0,
         currentEqualizer,
         equalizers;
 
     function equalize(currentWidth) {
 
-        if (currentWidth !== lastKnownWidth) {
+        // reset Equalizer CSS rules
+        equalizerCSSRules = '';
+        // invalidate layout
+        equalizerStyleEl.textContent = '';
 
-            lastKnownWidth = currentWidth;
+        for (i=0; i < equalizers.length; i++) {
 
-            for (i=0; i < equalizers.length; i++) {
+            currentEqualizer = equalizers[i];
 
-                currentEqualizer = equalizers[i];
+            if(currentWidth > currentEqualizer.equalizeOn) {
 
-                if(lastKnownWidth > currentEqualizer.equalizeOn) {
-
-                    currentEqualizer.heightArray = [];
-                    currentEqualizer.el.classList.add('resetEqualizer');
-
-                    // recalculate layout
-                    for (j=0; j < currentEqualizer.items.length; j++) {
-                        matchedElemHeight = currentEqualizer.items[j].offsetHeight;
-                        currentEqualizer.heightArray.push( matchedElemHeight > currentEqualizer.minHeight ? matchedElemHeight : currentEqualizer.minHeight );
-                    }
-
-                    currentEqualizer.lastKnownHeight = Math.max.apply(null, currentEqualizer.heightArray);
-                    currentEqualizer.hasBeenModified = true;
-
-                } else {
-
-                    if (currentEqualizer.lastKnownHeight>0) {
-                        currentEqualizer.hasBeenModified = true;
-                    }
-
-                    currentEqualizer.lastKnownHeight = '';
-
+                currentEqualizer.heightArray = [];
+                
+                // recalculate style and force layout
+                for (j=0; j < currentEqualizer.items.length; j++) {
+                    currentEqualizer.items[j].classList.add(currentEqualizer.id + i);
+                    matchedElemHeight = currentEqualizer.items[j].clientHeight;
+                    currentEqualizer.heightArray.push( matchedElemHeight > currentEqualizer.minHeight ? matchedElemHeight : currentEqualizer.minHeight );
                 }
 
-            
-                if (currentEqualizer.hasBeenModified) {
-                    for (j=0; j < currentEqualizer.items.length; j++) {
-                        currentEqualizer.items[j].style.height = currentEqualizer.lastKnownHeight; // set new height to shadow elements
-                    }
-                    currentEqualizer.hasBeenModified = false; // reset property
-                    currentEqualizer.el.classList.remove('resetEqualizer');   
-                } 
+                currentEqualizer.lastKnownHeight = Math.max.apply(null, currentEqualizer.heightArray);
+                currentEqualizer.hasBeenModified = true;
+
+            } else {
+
+                if (currentEqualizer.lastKnownHeight>0) {
+                    currentEqualizer.hasBeenModified = true;
+                }
+
+                // reset lastKnownHeight property
+                currentEqualizer.lastKnownHeight = '';
 
             }
         
+            if (currentEqualizer.hasBeenModified) {
+                equalizerCSSRules+='.' + currentEqualizer.id + i +'{height:'+currentEqualizer.lastKnownHeight+'px;}';
+                currentEqualizer.hasBeenModified = false; // reset property  
+            }
+
         }
+
+        // style & layout
+        equalizerStyleEl.textContent = equalizerCSSRules;
 
     }
 
@@ -64,7 +64,9 @@
         var
             data = config || {},
             watchClass = data.watch || 'equalizer',
-            equalizerElems = document.body.getElementsByClassName(watchClass),
+            styleId = data.styleId || 'equalizerCSS',
+            currentWidth = data.currentWidth || window.innerWidth,
+            equalizerElems = document.body.querySelectorAll('[data-' + watchClass + ']'),
             breakpointValues = data.breakpoint || [0, 640, 1024, 1280, 1440]; // default Foundation 6 breakpoints
 
         function getBreakpointWidth(value) {
@@ -83,18 +85,33 @@
             }
         }
 
-        if( !equalizerElems )
+        if( !equalizerElems ) {
+            equalizerStyleEl = null;
+            equalizerCSSRules = null;
+            matchedElemHeight = null;
+            currentEqualizer = null;
+            equalizers = null;
             return;
+        }
 
         equalizers = (function(elements) {
 
             var 
                 i = 0,
                 elementsObjArray = [];
+           
+            equalizerStyleEl = document.getElementById(styleId); // override equalizerStyleEl
+
+            // no <style> tag? => create it!
+            if (!equalizerStyleEl) {
+                equalizerStyleEl = document.createElement('style');
+                equalizerStyleEl.id = styleId;
+                document.getElementsByTagName('head')[0].appendChild(equalizerStyleEl);
+            }
 
             function _equalizer( equalizerContainer ) {
-                this.el = equalizerContainer;
-                this.items = equalizerContainer.getElementsByClassName(watchClass + '-watch'); // live elements
+                this.id = equalizerContainer.getAttribute("data-equalizer") || 'equ',
+                this.items = equalizerContainer.querySelectorAll('[data-' + watchClass + '-watch]'), // live elements
                 this.equalizeOn = getBreakpointWidth(equalizerContainer.getAttribute("data-equalize-on")) || getBreakpointWidth(data.equalizeOn || 'medium');
                 this.heightArray = [];
                 this.minHeight = equalizerContainer.getAttribute("data-equalizer-minheight") || 0;
@@ -111,7 +128,7 @@
         })(equalizerElems);
 
         breakpointValues.map(getBreakpointWidth);
-        equalize(window.innerWidth);
+        equalize(currentWidth);
 
     }
 
