@@ -28,7 +28,6 @@
                 
                 // recalculate style and force layout
                 for (j=0; j < currentEqualizer.items.length; j++) {
-                    currentEqualizer.items[j].classList.add(currentEqualizer.id + i);
                     matchedElemHeight = currentEqualizer.items[j].clientHeight;
                     currentEqualizer.heightArray.push( matchedElemHeight > currentEqualizer.minHeight ? matchedElemHeight : currentEqualizer.minHeight );
                 }
@@ -48,7 +47,7 @@
             }
         
             if (currentEqualizer.hasBeenModified) {
-                equalizerCSSRules+='.' + currentEqualizer.id + i +'{height:'+currentEqualizer.lastKnownHeight+'px;}';
+                equalizerCSSRules+='.' + currentEqualizer.equID + i +'{height:'+currentEqualizer.lastKnownHeight+'px;}';
                 currentEqualizer.hasBeenModified = false; // reset property  
             }
 
@@ -106,21 +105,33 @@
             if (!equalizerStyleEl) {
                 equalizerStyleEl = document.createElement('style');
                 equalizerStyleEl.id = styleId;
-                document.getElementsByTagName('head')[0].appendChild(equalizerStyleEl);
+                document.head.appendChild(equalizerStyleEl);
+            }
+            
+            function getEqualizerItems(equalizerContainer, equID) {
+                var
+                    j=0,
+                    items = equalizerContainer.querySelectorAll('[data-' + watchClass + '-watch]');
+                
+                for(; j<items.length; j++) {
+                    items[j].classList.add(equID + i);
+                }
+                
+                return items;
             }
 
-            function _equalizer( equalizerContainer ) {
-                this.id = equalizerContainer.getAttribute("data-equalizer") || 'equ',
-                this.items = equalizerContainer.querySelectorAll('[data-' + watchClass + '-watch]'), // live elements
-                this.equalizeOn = getBreakpointWidth(equalizerContainer.getAttribute("data-equalize-on")) || getBreakpointWidth(data.equalizeOn || 'medium');
+            function _equalizer(equalizerContainer, equID) {
+                this.equID = equID;
+                this.items = getEqualizerItems(equalizerContainer, equID);
+                this.equalizeOn = getBreakpointWidth(equalizerContainer.getAttribute('data-equalize-on')) || getBreakpointWidth(data.equalizeOn || 'medium');
                 this.heightArray = [];
-                this.minHeight = equalizerContainer.getAttribute("data-equalizer-minheight") || 0;
+                this.minHeight = equalizerContainer.getAttribute('data-equalizer-minheight') || 0;
                 this.hasBeenModified = false;
                 this.lastKnownHeight = 0;
             }
 
             for(; i < elements.length; i++) {
-                elementsObjArray.push( new _equalizer(elements[i]) );
+                elementsObjArray.push( new _equalizer( elements[i], elements[i].getAttribute('data-equalizer') || 'equ' ) );
             }
 
             return elementsObjArray;
