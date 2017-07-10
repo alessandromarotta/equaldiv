@@ -125,13 +125,13 @@
                 this.items = getEqualizerItems(equalizerContainer, equID);
                 this.equalizeOn = getBreakpointWidth(equalizerContainer.getAttribute('data-equalize-on')) || getBreakpointWidth(data.equalizeOn || 'medium');
                 this.heightArray = [];
-                this.minHeight = equalizerContainer.getAttribute('data-equalizer-minheight') || 0;
+                this.minHeight = equalizerContainer.getAttribute('data-' + watchClass + '-minheight') || 0;
                 this.hasBeenModified = false;
                 this.lastKnownHeight = 0;
             }
 
             for(; i < elements.length; i++) {
-                elementsObjArray.push( new _equalizer( elements[i], elements[i].getAttribute('data-equalizer') || 'equ' ) );
+                elementsObjArray.push( new _equalizer( elements[i], elements[i].getAttribute('data-' + watchClass) || 'equ' ) );
             }
 
             return elementsObjArray;
