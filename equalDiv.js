@@ -1,6 +1,4 @@
-(function(f) {
-    window.equalDiv = f();
-})(function() {
+window.equalDiv = (function() {
 
     var
         i = 0,
@@ -58,94 +56,94 @@
 
     }
 
-    function init(config) {
-
-        var
-            data = config || {},
-            watchClass = data.watch || 'equalizer',
-            styleId = data.styleId || 'equalizerCSS',
-            currentWidth = data.currentWidth || window.innerWidth,
-            equalizerElems = document.body.querySelectorAll('[data-' + watchClass + ']'),
-            breakpointValues = data.breakpoint || [0, 640, 1024, 1280, 1440]; // default Foundation 6 breakpoints
-
-        function getBreakpointWidth(value) {
-            switch(value) {
-                case 'small':
-                    return breakpointValues[0] || 0;
-                case 'medium':
-                    return breakpointValues[1] || 640;
-                case 'large':
-                    return breakpointValues[2] || 1024;
-                case 'xlarge':
-                    return breakpointValues[3] || 1280;
-                case 'xxlarge':
-                    return breakpointValues[4] || 1440;
-                default:
-            }
-        }
-
-        if( !equalizerElems ) {
-            equalizerStyleEl = null;
-            equalizerCSSRules = null;
-            matchedElemHeight = null;
-            currentEqualizer = null;
-            equalizers = null;
-            return;
-        }
-
-        equalizers = (function(elements) {
-
-            var 
-                i = 0,
-                elementsObjArray = [];
-           
-            equalizerStyleEl = document.getElementById(styleId); // override equalizerStyleEl
-
-            // no <style> tag? => create it!
-            if (!equalizerStyleEl) {
-                equalizerStyleEl = document.createElement('style');
-                equalizerStyleEl.id = styleId;
-                document.head.appendChild(equalizerStyleEl);
-            }
-            
-            function getEqualizerItems(equalizerContainer, equID) {
-                var
-                    j=0,
-                    items = equalizerContainer.querySelectorAll('[data-' + watchClass + '-watch]');
-                
-                for(; j<items.length; j++) {
-                    items[j].classList.add(equID + i);
-                }
-                
-                return items;
-            }
-
-            function _equalizer(equalizerContainer, equID) {
-                this.equID = equID;
-                this.items = getEqualizerItems(equalizerContainer, equID);
-                this.equalizeOn = getBreakpointWidth(equalizerContainer.getAttribute('data-equalize-on')) || getBreakpointWidth(data.equalizeOn || 'medium');
-                this.heightArray = [];
-                this.minHeight = equalizerContainer.getAttribute('data-' + watchClass + '-minheight') || 0;
-                this.hasBeenModified = false;
-                this.lastKnownHeight = 0;
-            }
-
-            for(; i < elements.length; i++) {
-                elementsObjArray.push( new _equalizer( elements[i], elements[i].getAttribute('data-' + watchClass) || 'equ' ) );
-            }
-
-            return elementsObjArray;
-
-        })(equalizerElems);
-
-        breakpointValues.map(getBreakpointWidth);
-        equalize(currentWidth);
-
-    }
+    
 
     return {
-        init: init,
         equalize: equalize,
+        init: function (config) {
+
+            var
+                data = config || {},
+                watchClass = data.watch || 'equalizer',
+                styleId = data.styleId || 'equalizerCSS',
+                currentWidth = data.currentWidth || window.innerWidth,
+                equalizerElems = document.body.querySelectorAll('[data-' + watchClass + ']'),
+                breakpointValues = data.breakpoint || [0, 640, 1024, 1280, 1440]; // default Foundation 6 breakpoints
+
+            function getBreakpointWidth(value) {
+                switch(value) {
+                    case 'small':
+                        return breakpointValues[0] || 0;
+                    case 'medium':
+                        return breakpointValues[1] || 640;
+                    case 'large':
+                        return breakpointValues[2] || 1024;
+                    case 'xlarge':
+                        return breakpointValues[3] || 1280;
+                    case 'xxlarge':
+                        return breakpointValues[4] || 1440;
+                    default:
+                }
+            }
+
+            if( !equalizerElems ) {
+                equalizerStyleEl = null;
+                equalizerCSSRules = null;
+                matchedElemHeight = null;
+                currentEqualizer = null;
+                equalizers = null;
+                return;
+            }
+
+            equalizers = (function(elements) {
+
+                var 
+                    i = 0,
+                    elementsObjArray = [];
+
+                function getEqualizerItems(equalizerContainer, equID) {
+                    var
+                        j=0,
+                        items = equalizerContainer.querySelectorAll('[data-' + watchClass + '-watch]');
+                    
+                    for(; j<items.length; j++) {
+                        items[j].classList.add(equID + i);
+                    }
+                    
+                    return items;
+                }
+            
+                function _equalizer(equalizerContainer, equID) {
+                    this.equID = equID;
+                    this.items = getEqualizerItems(equalizerContainer, equID);
+                    this.equalizeOn = getBreakpointWidth(equalizerContainer.getAttribute('data-equalize-on') || (data.equalizeOn || 'medium'));
+                    this.heightArray = [];
+                    this.minHeight = equalizerContainer.getAttribute('data-' + watchClass + '-minheight') || 0;
+                    this.hasBeenModified = false;
+                    this.lastKnownHeight = 0;
+                }
+
+                equalizerStyleEl = document.getElementById(styleId);
+
+                // no <style> tag? => create it!
+                if (!equalizerStyleEl) {
+                    equalizerStyleEl = document.createElement('style');
+                    equalizerStyleEl.id = styleId;
+                    document.head.appendChild(equalizerStyleEl);
+                }
+                
+                for(; i < elements.length; i++) {
+                    elementsObjArray.push( new _equalizer( elements[i], elements[i].getAttribute('data-' + watchClass) || 'equ' ) );
+                }
+
+                return elementsObjArray;
+
+            })(equalizerElems);
+
+            breakpointValues.map(getBreakpointWidth);
+            equalize(currentWidth);
+
+        }
     };
 
-});
+})();
